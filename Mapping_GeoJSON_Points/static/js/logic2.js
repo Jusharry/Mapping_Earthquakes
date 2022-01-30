@@ -33,13 +33,13 @@ let sanFranAirport =
 // }).addTo(map);
 
 //OnEachFeature method
-L.geoJSON(sanFranAirport,{
-  onEachFeature: function(feature,layer){
-    console.log(layer);
-    layer.bindPopup;
+// L.geoJSON(sanFranAirport,{
+//   onEachFeature: function(feature,layer){
+//     console.log(layer);
+//     layer.bindPopup;
 
-  }
-}).addTo(map);
+//   }
+// }).addTo(map);
 
 // Coordinates for each point to be used in the line.
 // let line = [
@@ -118,3 +118,16 @@ streets.addTo(map);
 
 // Accessing the airport GeoJSON URL
 let airportData = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquakes/main/majorAirports.json";
+
+// Grabbing our GeoJSON data from geojsaon url file above.
+d3.json(airportData).then(function(data) {
+  console.log(data);
+// Creating a GeoJSON layer with the retrieved data.
+L.geoJSON(data,{
+        onEachFeature: function(feature,layer){
+          // console.log(layer);
+          layer.bindPopup("<h2>Airport Code: "+ feature.properties.faa +"</h2> <hr> <h3>Airport Name: " +feature.properties.name+ "</h3>");
+      
+        }
+      }).addTo(map);
+})
