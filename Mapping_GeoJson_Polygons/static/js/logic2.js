@@ -151,23 +151,23 @@ let torontoHoods = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquak
 // })
 
 // Grabbing our GeoJSON data from torontoRoutes.
-d3.json(torontoData).then(function(data) {
-  console.log(data);
-// Creating a GeoJSON layer with the retrieved data.
+// d3.json(torontoData).then(function(data) {
+//   console.log(data);
+// // Creating a GeoJSON layer with the retrieved data.
 
-let myStyle ={
-  color: "#ffffa1",
-  weight: 2,
-};
-L.geoJSON(data,{
-  style: myStyle,
-  onEachFeature: function(feature,layer){
-    layer.bindPopup("<h2>Airport Code: "+ feature.properties.src +"</h2> <hr> <h3>Destination: " +feature.properties.dst+ "</h3>");
+// let myStyle ={
+//   color: "#ffffa1",
+//   weight: 2,
+// };
+// L.geoJSON(data,{
+//   style: myStyle,
+//   onEachFeature: function(feature,layer){
+//     layer.bindPopup("<h2>Airport Code: "+ feature.properties.src +"</h2> <hr> <h3>Destination: " +feature.properties.dst+ "</h3>");
      
-  }
+//   }
   
-}).addTo(map);
-});
+// }).addTo(map);
+// });
 
 d3.json(torontoHoods).then(function(data){
   console.log(data);
