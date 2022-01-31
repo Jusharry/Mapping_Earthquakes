@@ -35,18 +35,18 @@ let navStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/navigation
 // navStreets.addTo(map);
 //Create a base layer that holds all maps.
 let baseMaps = {
-  Street: streets,
-  Dark: darkStreets,
-  Satellite: satStreets,
-  Navigation: navStreets
+  "Streets": streets,
+  // Dark: darkStreets,
+  "Satellite": satStreets,
+  // Navigation: navStreets
 };
 // Create the map object with a center and zoom level
 // let map = L.map('mapid').setView([30, 30], 2);
 
 //Alternate
 let map = L.map("mapid", {
-  center: [43.7, -79.3],
-  zoom: 9.5,
+  center: [39.5, -98.5],
+  zoom: 3,
   layers:[streets]
 });
 
@@ -136,6 +136,8 @@ let airportData = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquake
 let torontoData = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquakes/main/torontoRoutes.json";
 let torontoHoods = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquakes/main/torontoNeighborhoods.json";
 
+//Access earthquake data 
+let quakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Grabbing our GeoJSON data from majorAirports geojson url file above and adding popups.
 // d3.json(airportData).then(function(data) {
@@ -153,7 +155,7 @@ let torontoHoods = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquak
 // Grabbing our GeoJSON data from torontoRoutes.
 // d3.json(torontoData).then(function(data) {
 //   console.log(data);
-// // Creating a GeoJSON layer with the retrieved data.
+// Creating a GeoJSON layer with the retrieved data.
 
 // let myStyle ={
 //   color: "#ffffa1",
@@ -169,14 +171,44 @@ let torontoHoods = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquak
 // }).addTo(map);
 // });
 
-d3.json(torontoHoods).then(function(data){
-  
+// Grabbing our GeoJSON data from torontoHoods.
+// d3.json(torontoHoods).then(function(data){
+//   console.log(data);
+//   L.geoJSON(data,{
+//     weight: 1,
+//     fillColor: '#ffffa1'
+//   }).addTo(map);
 
+// });
+
+//Grab data from USGS website
+d3.json(quakeData).then(function(data){
   console.log(data);
-  
-  L.geoJSON(data,{
-    weight: 1,
-    fillColor: '#ffffa1'
-  }).addTo(map);
 
+// This function returns the style data for each of the earthquakes we plot on
+// the map. We pass the magnitude of the earthquake into a function
+// to calculate the radius.
+function styleInfo(feature) {
+  return {
+    opacity: 1,
+    fillOpacity: 1,
+    fillColor: "#ffae42",
+    color: "#000000",
+    radius: getRadius(feature.properties.mag),
+    stroke: true,
+    weight: 0.5
+  };
+}
+function getRadius(magnitude){
+  if (magnitude===0){
+    return 1;
+  }
+    return magnitude * 4;
+}
+  L.geoJSON(data,{
+    pointToLayer: function(feature, latlng) {
+      return L.circleMarker(latlng);
+    },
+    style: styleInfo
+  }).addTo(map);
 });
