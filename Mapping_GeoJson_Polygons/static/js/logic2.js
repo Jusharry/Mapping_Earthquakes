@@ -2,7 +2,7 @@
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
-    id: 'mapbox/light-v10',
+    id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1,
     accessToken: API_KEY
@@ -46,7 +46,7 @@ let baseMaps = {
 //Alternate
 let map = L.map("mapid", {
   center: [43.7, -79.3],
-  zoom: 2,
+  zoom: 9.5,
   layers:[streets]
 });
 
@@ -134,7 +134,7 @@ L.control.layers(baseMaps).addTo(map);
 // Accessing the airport GeoJSON URL
 let airportData = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquakes/main/majorAirports.json";
 let torontoData = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquakes/main/torontoRoutes.json";
-let torontoHoods = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquakes/main/torontoNeighbourhoods.json";
+let torontoHoods = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquakes/main/torontoNeighborhoods.json";
 
 
 // Grabbing our GeoJSON data from majorAirports geojson url file above and adding popups.
@@ -170,7 +170,13 @@ let torontoHoods = "https://raw.githubusercontent.com/Jusharry/Mapping_Earthquak
 // });
 
 d3.json(torontoHoods).then(function(data){
+  
+
   console.log(data);
-  L.geoJSON(data).addTo(map);
+  
+  L.geoJSON(data,{
+    weight: 1,
+    fillColor: '#ffffa1'
+  }).addTo(map);
 
 });
