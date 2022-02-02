@@ -52,7 +52,7 @@ L.control.layers(baseMaps, overlays).addTo(map);
 
 // Access tectonic plate data 
 let quakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
-let tectonicData = "../PB2002_boundaries.json";
+let tectonicData = "Earthquake_Challenge/PB2002_boundaries.json";
 let majorQuakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
 // Retrieve the earthquake GeoJSON data.
 d3.json(quakeData).then(function(data) {
